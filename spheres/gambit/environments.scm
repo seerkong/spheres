@@ -23,7 +23,8 @@
            (debug-location)
            (debug-source)
            (debug-environments))
-  (println "-- environment: debug -- preloaded libraries: (spheres/core meta) (spheres/core assert)")
+  (println "-- environment: debug -- preloaded libraries: (spheres/core meta) (spheres/core assert) (spheres/object prototype) ")
+  (load (spheres/object prototype))
   (load (spheres/core assert)))
  ;; Null Environment
  (else #!void))
