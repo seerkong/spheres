@@ -12,23 +12,23 @@
           prototype:make-setter-getter
           make-prototype-object
           prototype:make-dispatch-table
-          string<<
+          >>string
           $
-          <<
+          >>
           define-predicate
           object
-          pp<<)
+          >>pp)
   (import (spheres/core base))
   
  ;;! Send messages to objects
- (define-syntax $
+ (define-syntax >>
    (syntax-rules ()
      ((_ ?selector ?obj ?args ...)
       (let ((obj ?obj))
         ((-> '?selector obj) obj ?args ...)))))
 
  ;;! Alternate syntax for sending messages to objects
- (define-syntax <<
+ (define-syntax $
    (syntax-rules ()
      ((_ ?obj ?selector ?args ...)
       (let ((obj ?obj))
@@ -85,9 +85,9 @@
                    (cons 'deep-clone prototype:deep-clone-method))))))))))
 
  ;;! print object
- (define-syntax pp<<
+ (define-syntax >>pp
    (syntax-rules ()
      ((_ ?obj)
-      (pp (string<< ?obj)))))
+      (pp (>>string ?obj)))))
 
  (include "prototype.scm"))

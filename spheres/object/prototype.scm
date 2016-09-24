@@ -161,10 +161,10 @@
        (else
         (loop yes (cons (car list) no) (cdr list))))))
   (assert (prototype-object? obj) "can't clone: this isn't an object")
-  (let ((field-names ($ field-names obj)))
+  (let ((field-names (>> field-names obj)))
     (receive (fields methods)
              (partition (lambda (pair) (memq (car pair) field-names))
-                        ($ methods obj))
+                        (>> methods obj))
              (make-prototype-object
               (prototype:make-dispatch-table
                (append
@@ -176,7 +176,7 @@
 ;;! Recursively clones delegates
 (define (prototype:deep-clone obj)
   (let* ((cloned (prototype:shallow-clone obj))
-         (del (assq 'delegate ($ methods cloned))))
+         (del (assq 'delegate (>> methods cloned))))
     (when del
           (let* ((delegate ((cdr del) cloned))
                  (cloned-delegate
@@ -188,11 +188,11 @@
 (define prototype:deep-clone-method (lambda (self) (prototype:deep-clone self)))
 
 ;;! Return a string describing any object
-(define (string<< thing)
+(define (>>string thing)
   (let ((prototype-obj->string
          (lambda (obj)
            (let ((outp (open-output-string))
-                 (field-names ($ field-names  obj))
+                 (field-names (>> field-names  obj))
                  (lookup (object-dispatcher obj)))
              (display "#[instance" outp)
              (for-each (lambda (name)
